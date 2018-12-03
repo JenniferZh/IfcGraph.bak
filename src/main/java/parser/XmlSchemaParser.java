@@ -57,7 +57,7 @@ public class XmlSchemaParser {
         if (info.hasAttribute("base") && info.getAttribute("base").startsWith("ifc:Ifc")) {
             String parent = info.getAttribute("base");
             parent = parent.substring(4);
-            en.setParent(parent);
+            en.setParentName(parent);
         }
         NodeList attrs = info.getChildNodes();
         for (int i = 0; i < attrs.getLength(); i++) {

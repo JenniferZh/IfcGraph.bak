@@ -9,17 +9,58 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ExpressSchemaParser implements ExpressGrammarListener{
 
     private Entity curEntity;
-    private List<Entity> entityList = new ArrayList<Entity>();
+    private List<Entity> entityList = new LinkedList<>();
 
-    public List<Entity> GetEntityList() {
+    public List<Entity> getEntityList() {
         return entityList;
     }
+
+    public void getDerivedAttributes() {
+        Map<String, Entity> entityMap = new HashMap<String, Entity>();
+        Set<String> visited = new HashSet<>();
+
+        for (Entity entity: entityList) {
+            entityMap.put(entity.getName(), entity);
+        }
+        for (Entity entity: entityList) {
+            if (entity.getParentName() != null) {
+                Entity parent = entityMap.get(entity.getParentName());
+                entity.setParent(parent);
+            }
+        }
+        for (Entity entity: entityList) {
+            findDerivedAttribute(entity, visited);
+        }
+        for (Entity entity: entityList) {
+            List<Attribute> attrList = entity.getAttributes();
+            for (int i = 0; i < attrList.size(); i++) {
+                attrList.get(i).SetIndex(i);
+            }
+        }
+    }
+
+    private void findDerivedAttribute(Entity entity, Set<String> visited) {
+        if (visited.contains(entity.getName())) return;
+
+        visited.add(entity.getName());
+        if (entity.getParent() == null) return;
+        Entity parent = entity.getParent();
+        findDerivedAttribute(parent, visited);
+        List<Attribute> parent_attr = parent.getAttributes();
+        for (int i = parent_attr.size()-1; i >= 0; i--) {
+            // do not copy reference, new an attribute here
+            Attribute new_attr = new Attribute(parent_attr.get(i).getName());
+            new_attr.SetDerived(true);
+            entity.getAttributes().add(0, new_attr);
+        }
+    }
+
+
 
     @Override
     public void enterSchema(ExpressGrammarParser.SchemaContext ctx) {
@@ -73,7 +114,7 @@ public class ExpressSchemaParser implements ExpressGrammarListener{
 
     @Override
     public void enterSubtype(ExpressGrammarParser.SubtypeContext ctx) {
-        curEntity.setParent(ctx.NAME().getText());
+        curEntity.setParentName(ctx.NAME().getText());
     }
 
     @Override
@@ -395,7 +436,8 @@ public class ExpressSchemaParser implements ExpressGrammarListener{
             ParseTreeWalker walker = new ParseTreeWalker(); // create standard walker
             ExpressSchemaParser extractor = new ExpressSchemaParser();
             walker.walk(extractor, tree); // initiate walk of tree with listener
-            List<Entity> res = extractor.GetEntityList();
+            extractor.getDerivedAttributes();
+            List<Entity> res = extractor.getEntityList();
             for (Entity e: res) System.out.println(e);
         } catch (Exception e) {
             e.printStackTrace();
