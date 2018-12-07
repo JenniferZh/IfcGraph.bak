@@ -84,7 +84,7 @@ public class STEPGrammarLexer extends Lexer {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "parser/STEPGrammar.g4"; }
+	public String getGrammarFileName() { return "STEPGrammar.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

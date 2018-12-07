@@ -14,6 +14,7 @@ import java.util.*;
 
 public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
     private Element curElement = null;
+    private List<Element> elementList = new ArrayList<>();
     private List<Entity> entityList;
     private Map<String, Entity> entityMap;
     private Set<String> exclude;
@@ -58,13 +59,15 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
             System.out.print(entity);
             System.out.println(curElement);
             System.out.println();
+        } else {
+            elementList.add(curElement);
         }
-        database.insert(curElement, entity);
-        //System.out.println(cnt);
         return null;
     }
 
+
     public void setRelation() {
+        database.insertAll(elementList, entityMap);
         database.CreateRelation();
     }
 
@@ -76,7 +79,7 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
         //伪代码
         long startTime=System.currentTimeMillis();   //获取开始时间
 
-        CharStream input = CharStreams.fromFileName("E:\\1labdata\\IFC文件\\qhzf.ifc");
+        CharStream input = CharStreams.fromFileName("E:\\1labdata\\IFC文件\\wall.ifc");
 
         STEPGrammarLexer lexer = new STEPGrammarLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);

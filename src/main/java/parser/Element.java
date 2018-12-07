@@ -15,6 +15,10 @@ public class Element {
         this.attrs = new ArrayList<>();
     }
 
+    public String getIfcType() {
+        return ifcType;
+    }
+
     public void addAttribute(String attr) {
         attrs.add(attr);
     }

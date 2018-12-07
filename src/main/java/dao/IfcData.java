@@ -35,7 +35,7 @@ public class IfcData {
 
     public void createDb() throws IOException
     {
-        //FileUtils.deleteRecursively( databaseDirectory );
+        FileUtils.deleteRecursively( databaseDirectory );
 
         // START SNIPPET: startDb
         graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( databaseDirectory );
@@ -73,6 +73,41 @@ public class IfcData {
                 String attr_value = attrsElement.get(i);
                 dataNode.setProperty(attr_name, attr_value);
             }
+            tx.success();
+        }
+    }
+
+    public void insertAll(List<Element> elementList, Map<String, Entity> map) {
+        if (elementList == null || map == null)
+            throw new IllegalArgumentException();
+
+        try ( Transaction tx = graphDb.beginTx() )
+        {
+            for (Element ele: elementList) {
+                Entity ent = map.get(ele.getIfcType());
+
+                if (ent == null) continue;
+
+                Node dataNode = graphDb.createNode();
+
+                String labelName = ent.getName();
+                Label enlabel = Label.label(labelName);
+                dataNode.addLabel(enlabel);
+                dataNode.addLabel(Label.label("Element"));
+
+                int lineId = ele.getLineID();
+                dataNode.setProperty("lineId", lineId);
+
+                List<String> attrsElement = ele.getAttrs();
+                List<Attribute> attrsEntity = ent.getAttributes();
+
+                for (int i = 0; i < attrsElement.size(); i++) {
+                    String attr_name = attrsEntity.get(i).getName();
+                    String attr_value = attrsElement.get(i);
+                    dataNode.setProperty(attr_name, attr_value);
+                }
+            }
+
             tx.success();
         }
     }
