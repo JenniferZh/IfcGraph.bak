@@ -19,9 +19,8 @@ import static org.neo4j.helpers.collection.Iterators.loop;
 
 
 public class IfcData {
-    private static final File databaseDirectory = new File( "D:\\Program Files\\neo4j-community-3.4.10\\data\\databases\\ifc23t.db" );
-
-    // START SNIPPET: vars
+    //private static File databaseDirectory = new File( "D:\\Program Files\\neo4j-community-3.4.10\\data\\databases\\ifc23t.db" );
+    private static File databaseDirectory;
     GraphDatabaseService graphDb;
 
     private enum RelTypes implements RelationshipType
@@ -31,6 +30,10 @@ public class IfcData {
         REF_TO
     }
 
+    public IfcData(String dbName) {
+        String dbPath = "D:\\Program Files\\neo4j-community-3.4.10\\data\\databases\\"+dbName+".db";
+        databaseDirectory = new File(dbPath);
+    }
 
 
     public void createDb() throws IOException
@@ -238,7 +241,7 @@ public class IfcData {
 
     public static void main(String[] args) throws IOException {
         String path = "src\\main\\resources\\ifc4.exp";
-        IfcData meta = new IfcData();
+        IfcData meta = new IfcData("ifc4x1");
 
         meta.createDb();
         meta.CreateRelation();

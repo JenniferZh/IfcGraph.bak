@@ -22,11 +22,11 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
 
     public int cnt = 0;
 
-    public IfcFileLoader() throws IOException{
-        IfcMetaData meta = new IfcMetaData("src\\main\\resources\\IFC2X3.exp");
+    public IfcFileLoader(String dbName) throws IOException{
+        IfcMetaData meta = new IfcMetaData("src\\main\\resources\\IFC4x1.exp");
         entityList = meta.getEntityList();
         entityMap = new HashMap<String, Entity>();
-        database = new IfcData();
+        database = new IfcData(dbName);
         database.createDb();
         database.createIndexForLineId();
 
@@ -79,7 +79,7 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
         //伪代码
         long startTime=System.currentTimeMillis();   //获取开始时间
 
-        CharStream input = CharStreams.fromFileName("E:\\1labdata\\IFC文件\\wall.ifc");
+        CharStream input = CharStreams.fromFileName("E:\\1labdata\\IFC文件\\us.ifc");
 
         STEPGrammarLexer lexer = new STEPGrammarLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -87,7 +87,7 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
         ParseTree tree = parser.ifcFile();
 
 
-        IfcFileLoader loader = new IfcFileLoader();
+        IfcFileLoader loader = new IfcFileLoader("ifc4x1t");
         loader.visit(tree);
         loader.setRelation();
 
@@ -96,9 +96,6 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
 
         loader.stop();
         System.out.print(loader.cnt);
-
-
-
 
     }
 
