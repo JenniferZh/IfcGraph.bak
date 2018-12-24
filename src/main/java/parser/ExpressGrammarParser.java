@@ -1,11 +1,13 @@
-package parser;
-
 // Generated from F:/JavaWorkSpace/IfcGraph/src/main/resources\ExpressGrammar.g4 by ANTLR 4.7
+package parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ExpressGrammarParser extends Parser {
@@ -149,12 +151,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_schema; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterSchema(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitSchema(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitSchema(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -230,12 +229,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_beginSchema; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterBeginSchema(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitBeginSchema(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitBeginSchema(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -310,12 +306,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_entity; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterEntity(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitEntity(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitEntity(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -406,12 +399,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_beginEntity; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterBeginEntity(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitBeginEntity(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitBeginEntity(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -456,12 +446,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_entityType; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterEntityType(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitEntityType(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitEntityType(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -532,12 +519,9 @@ public class ExpressGrammarParser extends Parser {
 		public TerminalNode NAME() { return getToken(ExpressGrammarParser.NAME, 0); }
 		public SubtypeContext(SubtypeOfContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterSubtype(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitSubtype(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitSubtype(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -582,12 +566,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_supertypeOf; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterSupertypeOf(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitSupertypeOf(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitSupertypeOf(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -685,12 +666,9 @@ public class ExpressGrammarParser extends Parser {
 		public TerminalNode OPTIONAL() { return getToken(ExpressGrammarParser.OPTIONAL, 0); }
 		public AttrContext(EntityArgumentContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterAttr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitAttr(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitAttr(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -771,12 +749,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_collectionOf; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterCollectionOf(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitCollectionOf(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitCollectionOf(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -849,12 +824,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_collectionArgPart; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterCollectionArgPart(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitCollectionArgPart(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitCollectionArgPart(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -903,12 +875,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_beginNameList; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterBeginNameList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitBeginNameList(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitBeginNameList(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -939,12 +908,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_endNameList; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterEndNameList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitEndNameList(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitEndNameList(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -984,12 +950,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_nameList; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterNameList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitNameList(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitNameList(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1043,12 +1006,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_names; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterNames(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitNames(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitNames(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1120,12 +1080,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_typeName; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterTypeName(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitTypeName(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitTypeName(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1230,12 +1187,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_type; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterType(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitType(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitType(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1350,12 +1304,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_inversePart; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterInversePart(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitInversePart(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitInversePart(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1415,12 +1366,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_inverseSentence; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterInverseSentence(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitInverseSentence(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitInverseSentence(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1488,12 +1436,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_derivePart; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterDerivePart(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitDerivePart(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitDerivePart(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1567,12 +1512,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_deriveOverrideSentence; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterDeriveOverrideSentence(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitDeriveOverrideSentence(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitDeriveOverrideSentence(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1640,12 +1582,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_deriveSentence; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterDeriveSentence(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitDeriveSentence(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitDeriveSentence(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1715,12 +1654,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_uniquePart; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterUniquePart(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitUniquePart(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitUniquePart(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1776,12 +1712,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_uniqueSentence; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterUniqueSentence(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitUniqueSentence(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitUniqueSentence(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1842,12 +1775,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_wherePart; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterWherePart(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitWherePart(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitWherePart(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1903,12 +1833,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_whereSentence; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterWhereSentence(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitWhereSentence(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitWhereSentence(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1958,12 +1885,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_function; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterFunction(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitFunction(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitFunction(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2087,12 +2011,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_therule; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterTherule(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitTherule(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitTherule(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2205,12 +2126,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_commonKeyword; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterCommonKeyword(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitCommonKeyword(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitCommonKeyword(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2270,12 +2188,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_commonSentence; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterCommonSentence(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitCommonSentence(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitCommonSentence(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2392,12 +2307,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_typeSingleKeyword; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterTypeSingleKeyword(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitTypeSingleKeyword(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitTypeSingleKeyword(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2440,12 +2352,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_typeArrayKeyword; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterTypeArrayKeyword(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitTypeArrayKeyword(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitTypeArrayKeyword(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2494,12 +2403,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_typeKeyword; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterTypeKeyword(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitTypeKeyword(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitTypeKeyword(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2578,12 +2484,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_innerKeyword; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterInnerKeyword(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitInnerKeyword(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitInnerKeyword(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2681,12 +2584,9 @@ public class ExpressGrammarParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_sign; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).enterSign(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExpressGrammarListener ) ((ExpressGrammarListener)listener).exitSign(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ExpressGrammarVisitor ) return ((ExpressGrammarVisitor<? extends T>)visitor).visitSign(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 

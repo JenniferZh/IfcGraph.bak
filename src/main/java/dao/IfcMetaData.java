@@ -8,8 +8,8 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.io.fs.FileUtils;
-import parser.*;
-import parser.Entity;
+import util.Entity;
+import util.Attribute;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,9 +17,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * used for insert ifc class graph into neo4j
+ */
 public class IfcMetaData {
 
-    List<Entity> entityList = null;
+    private List<Entity> entityList = null;
 
     private static final File databaseDirectory = new File( "D:\\Program Files\\neo4j-community-3.4.10\\data\\databases\\hello.db" );
 
@@ -36,19 +39,7 @@ public class IfcMetaData {
     public IfcMetaData(String filePath) {
         try {
 
-            CharStream input = CharStreams.fromFileName(filePath);
-
-            ExpressGrammarLexer lexer = new ExpressGrammarLexer(input);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            ExpressGrammarParser parser = new ExpressGrammarParser(tokens);
-            ParseTree tree = parser.schema();
-
-
-            ParseTreeWalker walker = new ParseTreeWalker(); // create standard walker
-            ExpressSchemaParser extractor = new ExpressSchemaParser();
-            walker.walk(extractor, tree); // initiate walk of tree with listener
-            extractor.getDerivedAttributes();
-            entityList = extractor.getEntityList();
+            entityList = SchemaFileLoader.getEntityList(filePath);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +64,7 @@ public class IfcMetaData {
                 //create index
                 nodeIndex.put(entity.getName(), entityNode.getId());
                 //set label
-                Label enlabel = DynamicLabel.label("Node");
+                Label enlabel = Label.label("Node");
                 entityNode.addLabel(enlabel);
                 //set properties
                 List<Attribute> attrs = entity.getAttributes();
@@ -83,7 +74,7 @@ public class IfcMetaData {
 
                 for (Attribute attr: attrs) {
                     Node attrNode = graphDb.createNode();
-                    Label attrlabel = DynamicLabel.label("Attribute");
+                    Label attrlabel = Label.label("Attribute");
                     attrNode.addLabel(attrlabel);
                     attrNode.setProperty("name", attr.getName());
                     attrNode.setProperty("index", attr.getIndex());
@@ -130,9 +121,6 @@ public class IfcMetaData {
         } );
     }
 
-    public List<Entity> getEntityList() {
-        return entityList;
-    }
 
     public static void main(String[] args) throws IOException {
         String path = "src\\main\\resources\\ifc4.exp";

@@ -1,4 +1,6 @@
-package parser;
+package util;
+
+import util.Entity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package parser;
+package util;
 
 public class Attribute {
     private String name;

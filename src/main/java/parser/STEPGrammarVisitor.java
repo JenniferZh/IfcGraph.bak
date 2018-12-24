@@ -23,11 +23,26 @@ public interface STEPGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitHeader(STEPGrammarParser.HeaderContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link STEPGrammarParser#headerLine}.
+	 * Visit a parse tree produced by the {@code filedescipt}
+	 * labeled alternative in {@link STEPGrammarParser#headerLine}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitHeaderLine(STEPGrammarParser.HeaderLineContext ctx);
+	T visitFiledescipt(STEPGrammarParser.FiledesciptContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code filename}
+	 * labeled alternative in {@link STEPGrammarParser#headerLine}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFilename(STEPGrammarParser.FilenameContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code fileschema}
+	 * labeled alternative in {@link STEPGrammarParser#headerLine}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFileschema(STEPGrammarParser.FileschemaContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link STEPGrammarParser#data}.
 	 * @param ctx the parse tree

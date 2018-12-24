@@ -5,9 +5,10 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.schema.IndexDefinition;
 import org.neo4j.graphdb.schema.Schema;
 import org.neo4j.io.fs.FileUtils;
-import org.w3c.dom.Attr;
-import parser.*;
-import parser.Entity;
+import util.Element;
+import util.Entity;
+import util.Attribute;
+import util.IfcFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +20,10 @@ import static org.neo4j.helpers.collection.Iterators.loop;
 
 
 public class IfcData {
-    //private static File databaseDirectory = new File( "D:\\Program Files\\neo4j-community-3.4.10\\data\\databases\\ifc23t.db" );
-    private static File databaseDirectory;
+    private static File databaseDirectory = new File( "D:\\Program Files\\neo4j-community-3.4.10\\data\\databases\\ifc23t.db" );
     GraphDatabaseService graphDb;
+
+    private IfcFile ifcFile = null;
 
     private enum RelTypes implements RelationshipType
     {
@@ -30,11 +32,9 @@ public class IfcData {
         REF_TO
     }
 
-    public IfcData(String dbName) {
-        String dbPath = "D:\\Program Files\\neo4j-community-3.4.10\\data\\databases\\"+dbName+".db";
-        databaseDirectory = new File(dbPath);
+    public IfcData(String filePath) throws IOException{
+        ifcFile = IfcFileLoader.loadIFC(filePath);
     }
-
 
     public void createDb() throws IOException
     {
@@ -43,8 +43,10 @@ public class IfcData {
         // START SNIPPET: startDb
         graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( databaseDirectory );
         registerShutdownHook( graphDb );
-        //createIndexForLineId();
 
+        createIndexForLineId();
+        insertAll(ifcFile.getElementList(), ifcFile.getEntityMap());
+        CreateRelation();
     }
 
     /**
@@ -52,7 +54,7 @@ public class IfcData {
      * @param ele element(object) to be inserted
      * @param ent entity(class) that the element belongs to
      */
-    public void insert(Element ele, Entity ent) {
+    private void insert(Element ele, Entity ent) {
         if (ele == null || ent == null || ele.getAttrs().size() != ent.getAttributes().size())
             throw new IllegalArgumentException();
 
@@ -80,7 +82,7 @@ public class IfcData {
         }
     }
 
-    public void insertAll(List<Element> elementList, Map<String, Entity> map) {
+    private void insertAll(List<Element> elementList, Map<String, Entity> map) {
         if (elementList == null || map == null)
             throw new IllegalArgumentException();
 
@@ -115,7 +117,7 @@ public class IfcData {
         }
     }
 
-    public boolean isMatch(String value) {
+    private boolean isMatch(String value) {
         if (value == null) throw new IllegalArgumentException();
 
         value = value.replaceAll(" ", "");
@@ -138,7 +140,7 @@ public class IfcData {
         return false;
     }
 
-    public List<String> getMatchList(String value) {
+    private List<String> getMatchList(String value) {
         if (value == null) throw new IllegalArgumentException();
 
         List<String> result = new ArrayList<>();
@@ -152,7 +154,7 @@ public class IfcData {
         return result;
     }
 
-    public void CreateRelation() {
+    private void CreateRelation() {
         try ( Transaction tx = graphDb.beginTx() ) {
             Label label = Label.label("Element");
             for (Node node : loop(graphDb.findNodes(label))) {
@@ -198,7 +200,7 @@ public class IfcData {
         }
     }
 
-    public void createIndexForLineId() {
+    private void createIndexForLineId() {
         IndexDefinition indexDefinition;
         Label element = Label.label("Element");
         try ( Transaction tx = graphDb.beginTx() )
@@ -240,11 +242,10 @@ public class IfcData {
     }
 
     public static void main(String[] args) throws IOException {
-        String path = "src\\main\\resources\\ifc4.exp";
-        IfcData meta = new IfcData("ifc4x1");
+        //String path = "src\\main\\resources\\ifc4.exp";
+        IfcData meta = new IfcData("E:\\1labdata\\IFC文件\\us.ifc");
 
         meta.createDb();
-        meta.CreateRelation();
         meta.shutDown();
     }
 }

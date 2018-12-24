@@ -18,7 +18,9 @@ header
 
 
 headerLine
-	: typedListArgument ';'
+	: 'FILE_DESCRIPTION' '(' argumentList ')' ';' #filedescipt
+	| 'FILE_NAME' '(' STRING ',' argumentList ')' ';'  #filename
+	| 'FILE_SCHEMA' '(''(' STRING ')'')' ';' #fileschema
 	;
 
 
