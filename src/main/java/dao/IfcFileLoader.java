@@ -1,8 +1,6 @@
 package dao;
 
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import parser.STEPGrammarBaseVisitor;
 import parser.STEPGrammarLexer;
@@ -10,7 +8,7 @@ import parser.STEPGrammarParser;
 import util.*;
 
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
@@ -32,19 +30,60 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
 
     public static IfcFile loadIFC(String filePath) throws IOException{
 
+        String header = getStepHeader(filePath);
 
-        CharStream input = CharStreams.fromFileName(filePath);
+        CharStream input = CharStreams.fromString(header);
         STEPGrammarLexer lexer = new STEPGrammarLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         STEPGrammarParser parser = new STEPGrammarParser(tokens);
-        ParseTree tree = parser.ifcFile();
-
+        ParseTree tree = parser.header();
 
         IfcFileLoader loader = new IfcFileLoader();
         loader.visit(tree);
+        parseDataLine(filePath, loader);
         IfcFile file = new IfcFile(loader.modelName, loader.schemaType, loader.elementList, loader.entityMap);
+
         return file;
     }
+
+    public static void parseDataLine(String filePath, IfcFileLoader loader) throws IOException {
+        File file = new File(filePath);
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line;
+        while ((line = reader.readLine()) != null)
+        {
+            line = line.trim();
+            if(line.startsWith("#")) {
+                CharStream input = CharStreams.fromString(line);
+                STEPGrammarLexer lexer = new STEPGrammarLexer(input);
+                CommonTokenStream tokens = new CommonTokenStream(lexer);
+                STEPGrammarParser parser = new STEPGrammarParser(tokens);
+                ParseTree tree = parser.dataLine();
+                loader.visit(tree);
+            }
+        }
+    }
+
+    public static String getStepHeader(String filePath) throws IOException {
+
+        File file = new File(filePath);
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line;
+        String header = "";
+        while ((line = reader.readLine()) != null)
+        {
+            line = line.trim();
+            if (line.endsWith("ENDSEC;"))
+                break;
+            header += line;
+        }
+        int startIndex = header.indexOf("HEADER;");
+        header = header.substring(startIndex);
+        header = header + "ENDSEC;";
+        return header;
+    }
+
+
 
     @Override
     public Void visitFilename(STEPGrammarParser.FilenameContext ctx) {
@@ -97,6 +136,7 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
             System.out.println("elementAttrCount:"+curElement.getAttrs().size()+" entityAttrCount:"+entity.getAttributes().size());
         } else {
             elementList.add(curElement);
+            System.out.println(cnt);
         }
         return null;
     }
