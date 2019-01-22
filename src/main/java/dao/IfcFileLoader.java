@@ -136,7 +136,6 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
             System.out.println("elementAttrCount:"+curElement.getAttrs().size()+" entityAttrCount:"+entity.getAttributes().size());
         } else {
             elementList.add(curElement);
-            System.out.println(cnt);
         }
         return null;
     }

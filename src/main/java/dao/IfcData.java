@@ -2,6 +2,7 @@ package dao;
 
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import org.neo4j.graphdb.factory.GraphDatabaseSettings;
 import org.neo4j.graphdb.schema.IndexDefinition;
 import org.neo4j.graphdb.schema.Schema;
 import org.neo4j.io.fs.FileUtils;
@@ -42,11 +43,16 @@ public class IfcData {
 
         // START SNIPPET: startDb
         graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( databaseDirectory );
-        registerShutdownHook( graphDb );
 
+        registerShutdownHook( graphDb );
+        long startTime=System.currentTimeMillis();
         createIndexForLineId();
         insertAll(ifcFile.getElementList(), ifcFile.getEntityMap());
+        long midTime=System.currentTimeMillis();
         CreateRelation();
+        long endTime=System.currentTimeMillis();
+        System.out.println("插入节点"+(midTime-startTime));
+        System.out.println("建立关系"+(endTime-midTime));
     }
 
     /**
@@ -243,9 +249,15 @@ public class IfcData {
 
     public static void main(String[] args) throws IOException {
         //String path = "src\\main\\resources\\ifc4.exp";
-        IfcData meta = new IfcData("E:\\1labdata\\IFC文件\\us.ifc");
-
+        long startTime=System.currentTimeMillis();
+        IfcData meta = new IfcData("E:\\1万达\\模型\\WDGC-Q-AR-B01.ifc");
+        long midTime=System.currentTimeMillis();
+        System.out.println("加载文件"+(midTime-startTime));
+        //IfcData meta = new IfcData("E:\\\\1labdata\\\\IFC文件\\\\qhzf.ifc"); 99176ms
         meta.createDb();
+        long endTime=System.currentTimeMillis(); //获取结束时间
+        System.out.println("程序运行时间： "+(endTime-startTime)+"ms");
         meta.shutDown();
+
     }
 }
