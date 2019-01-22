@@ -250,7 +250,8 @@ public class IfcData {
     public static void main(String[] args) throws IOException {
         //String path = "src\\main\\resources\\ifc4.exp";
         long startTime=System.currentTimeMillis();
-        IfcData meta = new IfcData("E:\\1万达\\模型\\WDGC-Q-AR-B01.ifc");
+        //IfcData meta = new IfcData("E:\\1万达\\模型\\WDGC-Q-AR-B01.ifc");
+        IfcData meta = new IfcData("E:\\\\1labdata\\\\IFC文件\\\\qhzf.ifc");
         long midTime=System.currentTimeMillis();
         System.out.println("加载文件"+(midTime-startTime));
         //IfcData meta = new IfcData("E:\\\\1labdata\\\\IFC文件\\\\qhzf.ifc"); 99176ms
