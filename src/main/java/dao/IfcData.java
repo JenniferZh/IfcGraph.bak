@@ -24,17 +24,11 @@ public class IfcData {
     private static File databaseDirectory = new File( "D:\\Program Files\\neo4j-community-3.4.10\\data\\databases\\ifc23t.db" );
     GraphDatabaseService graphDb;
 
-    private IfcFile ifcFile = null;
-
     private enum RelTypes implements RelationshipType
     {
         HAS_ATTR,
         SUBTYPE_OF,
         REF_TO
-    }
-
-    public IfcData(String filePath) throws IOException{
-        ifcFile = IfcFileLoader.loadIFC(filePath);
     }
 
     public void createDb() throws IOException
@@ -43,16 +37,8 @@ public class IfcData {
 
         // START SNIPPET: startDb
         graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( databaseDirectory );
-
         registerShutdownHook( graphDb );
-        long startTime=System.currentTimeMillis();
         createIndexForLineId();
-        insertAll(ifcFile.getElementList(), ifcFile.getEntityMap());
-        long midTime=System.currentTimeMillis();
-        CreateRelation();
-        long endTime=System.currentTimeMillis();
-        System.out.println("插入节点"+(midTime-startTime));
-        System.out.println("建立关系"+(endTime-midTime));
     }
 
     /**
@@ -60,7 +46,7 @@ public class IfcData {
      * @param ele element(object) to be inserted
      * @param ent entity(class) that the element belongs to
      */
-    private void insert(Element ele, Entity ent) {
+    public void insert(Element ele, Entity ent) {
         if (ele == null || ent == null || ele.getAttrs().size() != ent.getAttributes().size())
             throw new IllegalArgumentException();
 
@@ -160,7 +146,7 @@ public class IfcData {
         return result;
     }
 
-    private void CreateRelation() {
+    public void CreateRelation() {
         try ( Transaction tx = graphDb.beginTx() ) {
             Label label = Label.label("Element");
             for (Node node : loop(graphDb.findNodes(label))) {
@@ -248,17 +234,6 @@ public class IfcData {
     }
 
     public static void main(String[] args) throws IOException {
-        //String path = "src\\main\\resources\\ifc4.exp";
-        long startTime=System.currentTimeMillis();
-        //IfcData meta = new IfcData("E:\\1万达\\模型\\WDGC-Q-AR-B01.ifc");
-        IfcData meta = new IfcData("E:\\\\1labdata\\\\IFC文件\\\\qhzf.ifc");
-        long midTime=System.currentTimeMillis();
-        System.out.println("加载文件"+(midTime-startTime));
-        //IfcData meta = new IfcData("E:\\\\1labdata\\\\IFC文件\\\\qhzf.ifc"); 99176ms
-        meta.createDb();
-        long endTime=System.currentTimeMillis(); //获取结束时间
-        System.out.println("程序运行时间： "+(endTime-startTime)+"ms");
-        meta.shutDown();
 
     }
 }

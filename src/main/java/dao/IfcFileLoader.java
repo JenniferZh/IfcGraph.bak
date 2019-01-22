@@ -19,16 +19,19 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
     private List<Entity> entityList;
     private Map<String, Entity> entityMap = new HashMap<String, Entity>();
     private Set<String> exclude;
+    private IfcData ifcdata;
 
     public int cnt = 0;
 
     public IfcFileLoader() throws IOException{
 
         exclude = ConfigReader.readExcluded();
+        ifcdata = new IfcData();
+        ifcdata.createDb();
 
     }
 
-    public static IfcFile loadIFC(String filePath) throws IOException{
+    public static void loadIFC(String filePath) throws IOException{
 
         String header = getStepHeader(filePath);
 
@@ -41,9 +44,8 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
         IfcFileLoader loader = new IfcFileLoader();
         loader.visit(tree);
         parseDataLine(filePath, loader);
-        IfcFile file = new IfcFile(loader.modelName, loader.schemaType, loader.elementList, loader.entityMap);
-
-        return file;
+        loader.ifcdata.CreateRelation();
+        loader.ifcdata.shutDown();
     }
 
     public static void parseDataLine(String filePath, IfcFileLoader loader) throws IOException {
@@ -135,7 +137,8 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
             System.out.println("lineID:"+curElement.getLineID()+" type:"+curElement.getIfcType());
             System.out.println("elementAttrCount:"+curElement.getAttrs().size()+" entityAttrCount:"+entity.getAttributes().size());
         } else {
-            elementList.add(curElement);
+            ifcdata.insert(curElement, entity);
+            System.out.println(cnt);
         }
         return null;
     }
@@ -143,7 +146,7 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
 
 
     public static void main(String[] args) throws IOException {
-        IfcFile file = loadIFC("E:\\1labdata\\IFC文件\\us.ifc");
+        IfcFileLoader.loadIFC("E:\\1万达\\模型\\WDGC-Q-AC-B01_ifc4rv.ifc");
         System.out.println();
 
     }
