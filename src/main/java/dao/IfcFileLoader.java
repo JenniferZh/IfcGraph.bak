@@ -126,8 +126,20 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
         int childCnt = ctx.typedListArgument().argumentList().getChildCount();
         for (int i = 0; i < childCnt; i++) {
             String attr = ctx.typedListArgument().argumentList().getChild(i).getText();
-            if (!attr.equals(","))
+            if (!attr.equals(",")) {
+                //unwrap IFCTEXT, IFCREAL等基本类型
+                if (attr.startsWith("IFC")) {
+                    attr = StringConverter.unwrap_primitive(attr);
+                } else if (attr.startsWith("'")) {
+                    try {
+                        attr = attr.substring(1, attr.length() - 1);
+                        attr = StringConverter.decode(attr);
+                    } catch (Exception e) {
+
+                    }
+                }
                 curElement.addAttribute(attr);
+            }
         }
 
         Entity entity = entityMap.get(type);

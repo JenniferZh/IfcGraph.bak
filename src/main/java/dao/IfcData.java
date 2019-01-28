@@ -117,6 +117,8 @@ public class IfcData {
                     String attr_value = attrsElement.get(i);
                     dataNode.setProperty(attr_name, attr_value);
                 }
+
+                dataNode.setProperty("IfcType", labelName);
             }
 
             tx.success();
@@ -166,6 +168,7 @@ public class IfcData {
             for (Node node : loop(graphDb.findNodes(label))) {
                 Iterator<String> propsIter = node.getPropertyKeys().iterator();
 
+
                 while (propsIter.hasNext()) {
                     String key = propsIter.next();
                     Object value = node.getProperty(key);
@@ -176,9 +179,11 @@ public class IfcData {
 
                         for (String matchedId: matched) {
                             Node nodeToConnect = findNodeByLineId(matchedId);
+                            //System.out.println(key);
                             // some ifc instances is excluded i.e. IfcCurve
                             if (nodeToConnect != null) {
-                                node.createRelationshipTo(nodeToConnect, RelTypes.REF_TO);
+                                node.createRelationshipTo(nodeToConnect, RelationshipType.withName(key));
+                                //RelationshipType.withName(key);
                             }
                         }
                     }
@@ -250,8 +255,9 @@ public class IfcData {
     public static void main(String[] args) throws IOException {
         //String path = "src\\main\\resources\\ifc4.exp";
         long startTime=System.currentTimeMillis();
+        IfcData meta = new IfcData("E:\\1万达\\模型\\WDGC-Q-AC-B01_ifc4rv.ifc");
         //IfcData meta = new IfcData("E:\\1万达\\模型\\WDGC-Q-AR-B01.ifc");
-        IfcData meta = new IfcData("E:\\\\1labdata\\\\IFC文件\\\\qhzf.ifc");
+        //IfcData meta = new IfcData("E:\\\\1labdata\\\\IFC文件\\\\qhzf.ifc");
         long midTime=System.currentTimeMillis();
         System.out.println("加载文件"+(midTime-startTime));
         //IfcData meta = new IfcData("E:\\\\1labdata\\\\IFC文件\\\\qhzf.ifc"); 99176ms
