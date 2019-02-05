@@ -23,8 +23,9 @@ import java.util.Map;
 public class IfcMetaData {
 
     private List<Entity> entityList = null;
+    Map<String, String[]> selectType = null;
 
-    private static final File databaseDirectory = new File( "D:\\Program Files\\neo4j-community-3.4.10\\data\\databases\\hello.db" );
+    private static final File databaseDirectory = new File( "G:\\Program Files\\neo4j\\neo4j-community-3.4.12\\data\\databases\\graph.db" );
 
     // START SNIPPET: vars
     GraphDatabaseService graphDb;
@@ -32,15 +33,16 @@ public class IfcMetaData {
     private enum RelTypes implements RelationshipType
     {
         HAS_ATTR,
-        SUBTYPE_OF
+        SUBTYPE_OF,
+        LINK_TO
     }
 
 
     public IfcMetaData(String filePath) {
         try {
-
-            entityList = SchemaFileLoader.getEntityList(filePath);
-
+            SchemaFileLoader fileLoader = SchemaFileLoader.getSchemaLoader(filePath);
+            entityList = fileLoader.getEntityList();
+            selectType = fileLoader.getSelectType();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,6 +91,32 @@ public class IfcMetaData {
                 Node node = graphDb.getNodeById(nodeId);
                 Node nodeParent = graphDb.getNodeById(nodeParentId);
                 node.createRelationshipTo(nodeParent, RelTypes.SUBTYPE_OF);
+
+                Iterable<Relationship> rels = node.getRelationships(Direction.OUTGOING, RelTypes.HAS_ATTR);
+
+                for (Relationship rel: rels) {
+                    Node attr = rel.getEndNode();
+                    String attrName = (String) attr.getProperty("name");
+                    String type = entity.findAttr(attrName).getType();
+                    //如果这个属性引用了一个entity,建立这个关系
+                    Long typeNodeId = nodeIndex.get(type);
+                    if (typeNodeId != null) {
+                        Node connected = graphDb.getNodeById(typeNodeId);
+                        attr.createRelationshipTo(connected, RelTypes.LINK_TO);
+                    }
+                    //如果这个属性应用了一个**select TYPE，建立属于TYPE的关系
+                    if (type.endsWith("Select")) {
+                        String[] types = selectType.get(type);
+                        for (String atype: types) {
+                            Long typeId = nodeIndex.get(atype);
+                            if (typeId != null) {
+                                Node connected = graphDb.getNodeById(typeId);
+                                attr.createRelationshipTo(connected, RelTypes.LINK_TO);
+                            }
+                        }
+                    }
+
+                }
             }
             // START SNIPPET: transaction
             tx.success();

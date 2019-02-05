@@ -95,15 +95,15 @@ public class IfcFileLoader extends STEPGrammarBaseVisitor<Void> {
     public Void visitFileschema(STEPGrammarParser.FileschemaContext ctx) {
         String schemaName = ctx.STRING().getText().toUpperCase();
         if (schemaName.equals("\'IFC2X3\'")) {
-            entityList = SchemaFileLoader.getEntityList("src\\main\\resources\\IFC2X3.exp");
+            entityList = SchemaFileLoader.getSchemaLoader("src\\main\\resources\\IFC2X3.exp").getEntityList();
             schemaType = IfcVersion.IFC2X3;
         }
         if (schemaName.equals("\'IFC4\'")) {
-            entityList = SchemaFileLoader.getEntityList("src\\main\\resources\\ifc4.exp");
+            entityList = SchemaFileLoader.getSchemaLoader("src\\main\\resources\\ifc4.exp").getEntityList();
             schemaType = IfcVersion.IFC4;
         }
         if (schemaName.equals("\'IFC4X1\'")) {
-            entityList = SchemaFileLoader.getEntityList("src\\main\\resources\\IFC4X1.exp");
+            entityList = SchemaFileLoader.getSchemaLoader("src\\main\\resources\\IFC4X1.exp").getEntityList();
             schemaType = IfcVersion.IFC4X1;
         }
         for (Entity entity: entityList) {

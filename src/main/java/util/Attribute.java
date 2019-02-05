@@ -4,6 +4,7 @@ public class Attribute {
     private String name;
     private boolean isDerived = false;
     private int index = -1;
+    private String type;
 
     //default attribute is direct and has no index
     public Attribute(String name) {
@@ -20,6 +21,14 @@ public class Attribute {
 
     public void SetIndex(int index) {
         this.index = index;
+    }
+
+    public void SetType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public int getIndex() {

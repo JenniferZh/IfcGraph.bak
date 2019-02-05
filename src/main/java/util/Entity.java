@@ -32,9 +32,17 @@ public class Entity {
     }
 
 
-    public void addAttribute(String attr) {
+    public void addAttribute(String attr, String type) {
         Attribute attribute = new Attribute(attr);
+        attribute.SetType(type);
         attributes.add(attribute);
+    }
+
+    public Attribute findAttr(String attrName) {
+        for (Attribute attr : attributes) {
+            if (attr.getName().equals(attrName)) return attr;
+        }
+        return null;
     }
 
     public List<Attribute> getAttributes() {
