@@ -21,7 +21,7 @@ import static org.neo4j.helpers.collection.Iterators.loop;
 
 
 public class IfcData {
-    private static File databaseDirectory = new File( "D:\\Program Files\\neo4j-community-3.4.10\\data\\databases\\ifc23t.db" );
+    private static File databaseDirectory = new File( "G:\\Program Files\\neo4j\\neo4j-community-3.4.12\\data\\databases\\graph.db" );
     GraphDatabaseService graphDb;
 
     private IfcFile ifcFile = null;
@@ -71,7 +71,7 @@ public class IfcData {
             String labelName = ent.getName();
             Label enlabel = Label.label(labelName);
             dataNode.addLabel(enlabel);
-            dataNode.addLabel(Label.label("Element"));
+
 
             int lineId = ele.getLineID();
             dataNode.setProperty("lineId", lineId);
@@ -100,11 +100,19 @@ public class IfcData {
                 if (ent == null) continue;
 
                 Node dataNode = graphDb.createNode();
+                dataNode.addLabel(Label.label("Element"));
 
                 String labelName = ent.getName();
                 Label enlabel = Label.label(labelName);
                 dataNode.addLabel(enlabel);
-                dataNode.addLabel(Label.label("Element"));
+
+                Entity parent = ent.getParent();
+                while (parent != null) {
+                    dataNode.addLabel(Label.label(parent.getName()));
+                    parent = parent.getParent();
+                }
+
+
 
                 int lineId = ele.getLineID();
                 dataNode.setProperty("lineId", lineId);
@@ -164,8 +172,9 @@ public class IfcData {
 
     private void CreateRelation() {
         try ( Transaction tx = graphDb.beginTx() ) {
-            Label label = Label.label("Element");
-            for (Node node : loop(graphDb.findNodes(label))) {
+
+
+            for (Node node : graphDb.getAllNodes()) {
                 Iterator<String> propsIter = node.getPropertyKeys().iterator();
 
 
@@ -255,7 +264,7 @@ public class IfcData {
     public static void main(String[] args) throws IOException {
         //String path = "src\\main\\resources\\ifc4.exp";
         long startTime=System.currentTimeMillis();
-        IfcData meta = new IfcData("E:\\1万达\\模型\\WDGC-Q-AC-B01_ifc4rv.ifc");
+        IfcData meta = new IfcData("F:\\XbimEssentials\\Xbim.Essentials.Tests\\TestSourceFiles\\House.ifc");
         //IfcData meta = new IfcData("E:\\1万达\\模型\\WDGC-Q-AR-B01.ifc");
         //IfcData meta = new IfcData("E:\\\\1labdata\\\\IFC文件\\\\qhzf.ifc");
         long midTime=System.currentTimeMillis();
